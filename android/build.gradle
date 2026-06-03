@@ -1,0 +1,56 @@
+buildscript {
+    ext.kotlin_version = '1.8.21'
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        }
+    }
+}
+
+
+
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null) {
+                    def manifestPath = project.file("src/main/AndroidManifest.xml")
+                    if (!manifestPath.exists() || !manifestPath.text.contains('package=')) {
+                        if (project.name == 'fluttertoast') {
+                            namespace 'io.github.ponnamkarthik.toast.fluttertoast'
+                        } else {
+                            namespace project.group
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "697070209321",
+    "firebase_url": "https://mahilasaarthi-2f8dd-default-rtdb.firebaseio.com",
+    "project_id": "mahilasaarthi-2f8dd",
+    "storage_bucket": "mahilasaarthi-2f8dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697070209321:android:ef23b45068d8d3b265cf38",
+        "android_client_info": {
+          "package_name": "com.mahilasaarthi.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697070209321-dl8nsi4k4bd8dp0daq92jp1fa3k92315.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhxJehRZhq7jCldxsVqrApD-fAebKEeV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697070209321-dl8nsi4k4bd8dp0daq92jp1fa3k92315.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697070209321:android:8ea9b558607ec3e365cf38",
+        "android_client_info": {
+          "package_name": "com.mahilasaarthi.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697070209321-dl8nsi4k4bd8dp0daq92jp1fa3k92315.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhxJehRZhq7jCldxsVqrApD-fAebKEeV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697070209321-dl8nsi4k4bd8dp0daq92jp1fa3k92315.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

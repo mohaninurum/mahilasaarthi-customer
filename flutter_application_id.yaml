@@ -1,0 +1,7 @@
+flutter_application_id:
+  android:
+    id: "com.mahilasaarthi.customer"
+    name: "Mahila"
+  ios:
+    id: "com.mahilasaarthi.customer"
+    name: "Mahila"

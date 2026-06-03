@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:mahilasaarthi/models/tax_order_location.history.dart';
+import 'package:mahilasaarthi/utils/ui_spacer.dart';
+import 'package:mahilasaarthi/utils/utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../../constants/app_colors.dart';
+
+class TaxiOrderHistoryListItem extends StatelessWidget {
+  const TaxiOrderHistoryListItem(
+    this.taxiOrderLocationHistory, {
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final TaxiOrderLocationHistory taxiOrderLocationHistory;
+  final Function(TaxiOrderLocationHistory) onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return HStack(
+      [
+        Icon(
+          FlutterIcons.location_pin_ent,
+          color: AppColor.primaryColor,
+          size: 28,
+        ).box.p4.roundedFull.color(AppColor.primaryColor.withOpacity(0.1)).make(),
+        VStack(
+          [
+            "${taxiOrderLocationHistory.address}"
+                .text
+                .semiBold
+                .lg
+                .maxLines(1)
+                .ellipsis
+                .make(),
+            UiSpacer.vSpace(3),
+            "${taxiOrderLocationHistory.latitude},${taxiOrderLocationHistory.longitude}"
+                .text
+                .maxLines(1)
+                .ellipsis
+                .sm
+                .make(),
+          ],
+        ).px12().expand(),
+        Icon(
+          Utils.isArabic
+              ? FlutterIcons.chevron_left_ent
+              : FlutterIcons.chevron_right_ent,
+          size: 18,
+          color: Colors.grey.shade300,
+        ),
+      ],
+      crossAlignment: CrossAxisAlignment.center,
+    ).py8().onInkTap(
+      () {
+        onPressed(taxiOrderLocationHistory);
+      },
+    );
+  }
+}
