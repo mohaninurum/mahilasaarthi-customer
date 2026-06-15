@@ -30,16 +30,21 @@ class _CustomImageState extends State<CustomImage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return CachedNetworkImage(
-      imageUrl: this.widget.imageUrl,
-      errorWidget: (context, imageUrl, _) => Image.asset(
-        AppImages.appLogo,
-        fit: this.widget.boxFit ?? BoxFit.cover,
-      ),
-      fit: this.widget.boxFit ?? BoxFit.cover,
-      progressIndicatorBuilder: (context, imageURL, progress) =>
-          BusyIndicator().centered(),
-    )
+    return (this.widget.imageUrl.isEmpty)
+        ? Image.asset(
+            AppImages.appLogo,
+            fit: this.widget.boxFit ?? BoxFit.cover,
+          )
+        : CachedNetworkImage(
+            imageUrl: this.widget.imageUrl,
+            errorWidget: (context, imageUrl, _) => Image.asset(
+              AppImages.appLogo,
+              fit: this.widget.boxFit ?? BoxFit.cover,
+            ),
+            fit: this.widget.boxFit ?? BoxFit.cover,
+            progressIndicatorBuilder: (context, imageURL, progress) =>
+                BusyIndicator().centered(),
+          )
         .h(this.widget.height ?? Vx.dp48)
         .w(this.widget.width ?? context.percentWidth)
         .onInkTap(this.widget.canZoom

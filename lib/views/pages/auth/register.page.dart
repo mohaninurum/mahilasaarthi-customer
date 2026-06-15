@@ -254,15 +254,43 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           SizedBox(height: 10,),
 
-                          //
-                          // CustomButton(
-                          //   title: "Create Account".tr(),
-                          //   loading: model.isBusy,
-                          //   onPressed: model.processRegister,
-                          // ).centered().py12(),
+                          // Aadhaar Consent
+                          HStack(
+                            [
+                              SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: Checkbox(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  side: MaterialStateBorderSide.resolveWith(
+                                        (states) => BorderSide(width: 1.0, color: AppColor.primaryColor),
+                                  ),
+                                  focusColor: Colors.white,
+                                  activeColor: AppColor.primaryColor,
+                                  value: model.aadhaarConsent,
+                                  onChanged: (value) {
+                                    model.aadhaarConsent = value ?? false;
+                                    model.notifyListeners();
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 7,),
+                              //
+                              "I hereby consent to the collection and verification of my Aadhaar details for identity verification purposes."
+                                  .tr()
+                                  .text
+                                  .make()
+                                  .expand(),
+                            ],
+                          ),
+                          SizedBox(height: 10,),
+
+                         
                           SizedBox(height: 12,),
                           InkWell(
-                            onTap: () {model.processRegister();},
+                            onTap: model.isBusy ? null : () {model.processRegister();},
 
                             splashColor: Colors.transparent,
                             hoverColor: Colors.transparent,
@@ -273,7 +301,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Color(0xffC70774),
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Center(child: Text("Create Account".tr(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)),
+                              child: Center(
+                                child: model.isBusy 
+                                  ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                                  : Text("Create Account".tr(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)
+                              ),
 
                             ).centered(),
                           ),

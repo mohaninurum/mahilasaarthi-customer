@@ -35,8 +35,14 @@ class ApiResponse {
 
         break;
       default:
-        message = body["message"] ??
-            "Whoops! Something went wrong, please contact support.";
+        if (body is Map) {
+          message = body["message"] ??
+              "Whoops! Something went wrong, please contact support.";
+        } else if (body is String) {
+          message = body;
+        } else {
+          message = "Whoops! Something went wrong, please contact support.";
+        }
         errors.add(message);
         break;
     }

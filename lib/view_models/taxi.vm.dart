@@ -17,6 +17,9 @@ import 'package:mahilasaarthi/services/location.service.dart';
 import 'package:mahilasaarthi/view_models/trip_taxi.vm.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:mahilasaarthi/widgets/bottomsheets/wallet_amount_entry.bottomsheet.dart';
+import 'package:mahilasaarthi/utils/CashfreePayment.dart';
+import 'package:mahilasaarthi/services/auth.service.dart';
 
 class TaxiViewModel extends TripTaxiViewModel {
   //
@@ -229,10 +232,18 @@ class TaxiViewModel extends TripTaxiViewModel {
 
     //if there was an issue placing the order
     if (!apiResponse.allGood) {
-      AlertService.error(
-        title: "Order failed".tr(),
-        text: apiResponse.message,
-      );
+      String msg = apiResponse.message?.toLowerCase() ?? "";
+      if (msg.contains("balance") ||
+          msg.contains("wallet") ||
+          msg.contains("insufficient")) {
+        // Automatically prompt for top-up
+        showAmountEntry();
+      } else {
+        AlertService.error(
+          title: "Order failed".tr(),
+          text: apiResponse.message,
+        );
+      }
     } else {
       //
       onGoingOrderTrip = Order.fromJson(apiResponse.body["order"]);
@@ -279,5 +290,39 @@ class TaxiViewModel extends TripTaxiViewModel {
       AppRoutes.chatRoute,
       arguments: chatEntity,
     );
+  }
+
+  showAmountEntry() async {
+    await showModalBottomSheet(
+      context: viewContext,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return WalletAmountEntryBottomSheet(
+          onSubmit: (String amount) {
+            Navigator.pop(context);
+            startCashfreeTopUp(amount);
+          },
+        );
+      },
+    );
+  }
+
+  void startCashfreeTopUp(String amount) {
+    setBusy(true);
+    final user = AuthServices.currentUser;
+    CashfreePayment payment = CashfreePayment();
+    payment.init(viewContext, onSuccessCallback: (orderId) {
+      setBusy(false);
+      toastSuccessful(
+          "Wallet recharged successfully. Please retry booking.".tr());
+    }, onErrorCallback: (error, orderId) {
+      setBusy(false);
+      toastError(error);
+    });
+    payment.startPayment(
+        amount: double.parse(amount),
+        customerId: user?.id.toString() ?? "1",
+        customerPhone: user?.phone ?? "9999999999");
   }
 }

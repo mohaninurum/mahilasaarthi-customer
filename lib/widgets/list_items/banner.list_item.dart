@@ -17,11 +17,13 @@ class BannerListItem extends StatelessWidget {
   final Function? onPressed;
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: this.imageUrl,
-      fit: BoxFit.fill,
-      width: double.infinity,
-    )
+    return (this.imageUrl.isEmpty)
+        ? SizedBox()
+        : CachedNetworkImage(
+            imageUrl: this.imageUrl,
+            fit: BoxFit.fill,
+            width: double.infinity,
+          )
         .onInkTap(this.onPressed != null ? () => this.onPressed!() : null)
         .box
         .withRounded(value: radius)

@@ -41,19 +41,21 @@ class EditProfilePage extends StatelessWidget {
                       model.currentUser == null
                           ? BusyIndicator()
                           : model.newPhoto == null
-                              ? CachedNetworkImage(
-                                  imageUrl: model.currentUser?.photo ?? "",
-                                  progressIndicatorBuilder:
-                                      (context, url, progress) {
-                                    return BusyIndicator();
-                                  },
-                                  errorWidget: (context, imageUrl, progress) {
-                                    return Image.asset(
-                                      AppImages.user,
-                                    );
-                                  },
-                                  fit: BoxFit.cover,
-                                )
+                              ? (model.currentUser?.photo == null || model.currentUser!.photo.isEmpty)
+                                  ? Image.asset(AppImages.user, fit: BoxFit.cover)
+                                  : CachedNetworkImage(
+                                      imageUrl: model.currentUser!.photo,
+                                      progressIndicatorBuilder:
+                                          (context, url, progress) {
+                                        return BusyIndicator();
+                                      },
+                                      errorWidget: (context, imageUrl, progress) {
+                                        return Image.asset(
+                                          AppImages.user,
+                                        );
+                                      },
+                                      fit: BoxFit.cover,
+                                    )
                                   .wh(
                                     Vx.dp64 * 1.3,
                                     Vx.dp64 * 1.3,

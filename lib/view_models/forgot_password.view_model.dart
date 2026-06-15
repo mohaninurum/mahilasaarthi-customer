@@ -130,9 +130,9 @@ class ForgotPasswordViewModel extends MyBaseViewModel {
   processCustomForgotPassword(String phoneNumber) async {
     setBusy(true);
     try {
-      await _authRequest.sendOTP(phoneNumber);
+      final response = await _authRequest.sendOTP(phoneNumber);
       setBusy(false);
-      showVerificationEntry();
+      showVerificationEntry(response.body?['otp_code']?.toString());
     } catch (error) {
       setBusy(false);
       viewContext.showToast(msg: "$error", bgColor: Colors.red);
@@ -140,13 +140,14 @@ class ForgotPasswordViewModel extends MyBaseViewModel {
   }
 
   //show a bottomsheet to the user for verification code entry
-  void showVerificationEntry() async {
+  void showVerificationEntry([String? otpCode]) async {
     //
     await viewContext.push(
       (context) {
         return AccountVerificationEntry(
           vm: this,
           phone: accountPhoneNumber!,
+          otpCode: otpCode,
           onSubmit: (smsCode) {
             //
             if (!AppStrings.isCustomOtp) {

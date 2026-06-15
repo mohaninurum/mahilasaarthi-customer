@@ -229,7 +229,7 @@ class TripTaxiViewModel extends TaxiGoogleMapViewModel {
       print("TRIP LOADDEDD");
       onGoingOrderTrip = await taxiRequest.getOnGoingTrip();
       print("TRIP LOADDING");
-      print(onGoingOrderTrip!.driver!.name.toString());
+      print(onGoingOrderTrip?.driver?.name?.toString() ?? "No driver yet");
       //loop until driver data is gotten
       if (onGoingOrderTrip?.driver == null) {
         onGoingOrderTrip?.driver = await taxiRequest.getDriverInfo(mDriverId!);

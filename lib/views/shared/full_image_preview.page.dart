@@ -41,16 +41,21 @@ class FullImagePreviewPage extends StatelessWidget {
             //
             PinchZoom(
               maxScale: 5,
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                errorWidget: (context, imageUrl, _) => Image.asset(
-                  AppImages.appLogo,
-                  fit: boxFit ?? BoxFit.cover,
-                ),
-                fit: boxFit ?? BoxFit.cover,
-                progressIndicatorBuilder: (context, imageURL, progress) =>
-                    BusyIndicator().centered(),
-              ),
+              child: (imageUrl.isEmpty)
+                  ? Image.asset(
+                      AppImages.appLogo,
+                      fit: boxFit ?? BoxFit.cover,
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      errorWidget: (context, imageUrl, _) => Image.asset(
+                        AppImages.appLogo,
+                        fit: boxFit ?? BoxFit.cover,
+                      ),
+                      fit: boxFit ?? BoxFit.cover,
+                      progressIndicatorBuilder: (context, imageURL, progress) =>
+                          BusyIndicator().centered(),
+                    ),
             ).expand(),
           ],
         ),

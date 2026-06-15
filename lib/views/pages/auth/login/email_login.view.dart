@@ -50,7 +50,7 @@ class EmailLoginView extends StatelessWidget {
           InkWell(
             splashColor: Colors.transparent,
             hoverColor: Colors.transparent,
-            onTap: () {model.processLogin();},
+            onTap: model.isBusy ? null : () {model.processLogin();},
             child: Container(
               width: double.infinity,
               height: 40,
@@ -58,8 +58,18 @@ class EmailLoginView extends StatelessWidget {
                 color: Color(0xffC70774),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Center(child: Text("Login".tr(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)),
-
+              child: Center(
+                child: model.isBusy 
+                  ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text("Login".tr(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+              ),
             ).centered(),
           ),
         ],

@@ -39,25 +39,44 @@ class HttpService {
     dio = new Dio(baseOptions);
     dio!.interceptors.add(getCacheManager().interceptor);
     
-    dio!.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      try {
-        String curl = "curl -X ${options.method.toUpperCase()} '${options.uri.toString()}'";
-        options.headers.forEach((k, v) {
-          curl += " -H '$k: $v'";
-        });
-        if (options.data != null) {
-          if (options.data is FormData) {
-            curl += " -d 'FormData...'";
-          } else {
-            curl += " -d '${jsonEncode(options.data)}'";
+    dio!.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        try {
+          String curl = "curl -X ${options.method.toUpperCase()} '${options.uri.toString()}'";
+          options.headers.forEach((k, v) {
+            curl += " -H '$k: $v'";
+          });
+          if (options.data != null) {
+            if (options.data is FormData) {
+              curl += " -d 'FormData...'";
+            } else {
+              curl += " -d '${jsonEncode(options.data)}'";
+            }
           }
+          print("====== API CURL ======\n$curl\n======================");
+        } catch (e) {
+          print("CURL Generation Error: $e");
         }
-        print("====== API CURL ======\n$curl\n======================");
-      } catch (e) {
-        print("CURL Generation Error: $e");
-      }
-      return handler.next(options);
-    }));
+        return handler.next(options);
+      },
+      onResponse: (response, handler) {
+        print("====== API RESPONSE ======");
+        print("URL: ${response.requestOptions.uri}");
+        print("STATUS: ${response.statusCode}");
+        print("DATA: ${response.data}");
+        print("==========================");
+        return handler.next(response);
+      },
+      onError: (DioError e, handler) {
+        print("====== API ERROR ======");
+        print("URL: ${e.requestOptions.uri}");
+        print("STATUS: ${e.response?.statusCode}");
+        print("DATA: ${e.response?.data}");
+        print("MESSAGE: ${e.message}");
+        print("=======================");
+        return handler.next(e);
+      },
+    ));
   }
 
   DioCacheManager getCacheManager() {

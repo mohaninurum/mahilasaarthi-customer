@@ -2,11 +2,12 @@
 
 class Api {
   static String get baseUrl {
-    return "https://admin.mahilasaarthi.in/api";
+    return "https://mahila-sarthi.mytechbro.com/api";
     // return "https://mahila.easysoft.pk/api";
   }
 
   static const appSettings = "/app/settings";
+  static const emergencyContacts = "/app/emergency-contacts";
   static const appOnboardings = "/app/onboarding?type=customer";
   static const faqs = "/app/faqs?type=customer";
 
@@ -25,6 +26,11 @@ class Api {
   static const verifyOtp = "/otp/verify";
   static const verifyFirebaseOtp = "/otp/firebase/verify";
   static const socialLogin = "/social/login";
+  
+  // Cashfree Verification APIs
+  static const generateAadhaarOtp = "/verify/aadhaar/generate-otp";
+  static const verifyAadhaarOtp = "/verify/aadhaar/submit-otp";
+  static const verifyFaceLiveness = "/verify/face-liveness";
 
   //
   static const banners = "/banners";

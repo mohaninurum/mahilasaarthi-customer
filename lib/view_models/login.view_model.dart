@@ -90,7 +90,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
           context: viewContext,
           type: CoolAlertType.error,
           title: "Login".tr(),
-          text: apiResponse.message,
+          text: apiResponse.message ?? "Login failed. Please try again.".tr(),
         );
         setBusyForObject(otpLogin, false);
         return;
@@ -145,9 +145,9 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
   processCustomOTPVerification() async {
     setBusyForObject(otpLogin, true);
     try {
-      await authRequest.sendOTP(accountPhoneNumber!);
+      final response = await authRequest.sendOTP(accountPhoneNumber!);
       setBusyForObject(otpLogin, false);
-      showVerificationEntry();
+      showVerificationEntry(response.body?['otp_code']?.toString());
     } catch (error) {
       setBusyForObject(otpLogin, false);
       viewContext.showToast(msg: "$error", bgColor: Colors.red);
@@ -155,7 +155,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
   }
 
   //
-  void showVerificationEntry() async {
+  void showVerificationEntry([String? otpCode]) async {
     //
     setBusy(false);
     //
@@ -163,6 +163,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
       (context) => AccountVerificationEntry(
         vm: this,
         phone: accountPhoneNumber!,
+        otpCode: otpCode,
         onSubmit: (smsCode) {
           //
           if (AppStrings.isFirebaseOtp) {
@@ -311,7 +312,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
           context: viewContext,
           type: CoolAlertType.error,
           title: "Login Failed".tr(),
-          text: apiResponse.message,
+          text: apiResponse.message ?? "Login failed. Please try again.".tr(),
         );
       } else {
         //everything works well
@@ -319,7 +320,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
         setBusy(true);
         final fbToken = apiResponse.body["fb_token"];
         await FirebaseAuth.instance.signInWithCustomToken(fbToken);
-        await AuthServices.saveUser(apiResponse.body["user"]);
+        await AuthServices.saveUser(apiResponse.body["user"], reload: false);
         await AuthServices.setAuthBearerToken(apiResponse.body["token"]);
         await AuthServices.isAuthenticated();
         setBusy(false);
@@ -337,11 +338,12 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
         text: "${error.message}",
       );
     } catch (error) {
+      print("Login error ==> $error");
       CoolAlert.show(
         context: viewContext,
         type: CoolAlertType.error,
         title: "Login Failed".tr(),
-        text: "${error}",
+        text: "An unexpected error occurred during login. Please try again later.".tr(),
       );
     }
   }

@@ -23,6 +23,11 @@ class SettingsRequest extends HttpService {
     }
   }
 
+  Future<ApiResponse> emergencyContacts() async {
+    final apiResult = await get(Api.emergencyContacts);
+    return ApiResponse.fromResponse(apiResult);
+  }
+
   Future<ApiResponse> appOnboardings() async {
     try {
       final apiResult = await get(Api.appOnboardings);

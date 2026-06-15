@@ -93,6 +93,11 @@ return Future(() => ApiResponse());
     required String countryCode,
     required String password,
     String code = "",
+    String? aadhaarNumber,
+    int? aadhaarVerified,
+    String? aadhaarName,
+    String? aadhaarGender,
+    String? aadhaarDob,
   }) async {
     final apiResult = await post(
       Api.register,
@@ -105,6 +110,11 @@ return Future(() => ApiResponse());
         "code": code,
         "role": "client",
         "tokens": await FirebaseTokenService().getDeviceToken(),
+        if (aadhaarNumber != null) "aadhaar_number": aadhaarNumber,
+        if (aadhaarVerified != null) "aadhaar_verified": aadhaarVerified,
+        if (aadhaarName != null) "aadhaar_name": aadhaarName,
+        if (aadhaarGender != null) "aadhaar_gender": aadhaarGender,
+        if (aadhaarDob != null) "aadhaar_dob": aadhaarDob,
       },
     );
 
@@ -280,6 +290,41 @@ return Future(() => ApiResponse());
       {
         "tokens": token,
       },
+    );
+    return ApiResponse.fromResponse(apiResult);
+  }
+
+  // --- Cashfree Verification APIs ---
+  Future<ApiResponse> generateAadhaarOtp(String aadhaarNumber) async {
+    final apiResult = await post(
+      Api.generateAadhaarOtp,
+      {
+        "aadhaar_number": aadhaarNumber,
+      },
+    );
+    return ApiResponse.fromResponse(apiResult);
+  }
+
+  Future<ApiResponse> verifyAadhaarOtp(String refId, String otp) async {
+    final apiResult = await post(
+      Api.verifyAadhaarOtp,
+      {
+        "ref_id": refId,
+        "otp": otp,
+      },
+    );
+    return ApiResponse.fromResponse(apiResult);
+  }
+
+  Future<ApiResponse> verifyFaceLiveness(File photo) async {
+    FormData formData = FormData.fromMap({});
+    formData.files.add(
+      MapEntry("image", await MultipartFile.fromFile(photo.path)),
+    );
+    
+    final apiResult = await postWithFiles(
+      Api.verifyFaceLiveness,
+      formData,
     );
     return ApiResponse.fromResponse(apiResult);
   }

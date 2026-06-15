@@ -13,6 +13,8 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'package:mahilasaarthi/utils/CashfreePayment.dart';
+import 'package:mahilasaarthi/services/auth.service.dart';
 import '../utils/Phonepe.dart';
 
 class WalletViewModel extends PaymentViewModel {
@@ -99,8 +101,6 @@ class WalletViewModel extends PaymentViewModel {
 
   //
   showAmountEntry() async {
-
-
     await showModalBottomSheet(
       context: viewContext,
       isScrollControlled: true,
@@ -109,13 +109,33 @@ class WalletViewModel extends PaymentViewModel {
         return WalletAmountEntryBottomSheet(
           onSubmit: (String amount) {
             viewContext.pop();
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => PhonePePayment( amount: int.parse(amount)),));
-            Phonepe().start(context,(double.parse(amount) * 100).toString());
-
-            // initiateWalletTopUp(amount);
+            startCashfreeTopUp(amount);
           },
         );
       },
+    );
+  }
+
+  void startCashfreeTopUp(String amount) {
+    setBusy(true);
+    final user = AuthServices.currentUser;
+    CashfreePayment payment = CashfreePayment();
+    payment.init(
+      viewContext, 
+      onSuccessCallback: (orderId) {
+        setBusy(false);
+        toastSuccessful("Wallet recharged successfully".tr());
+        loadWalletData(); // Refresh wallet balance
+      },
+      onErrorCallback: (error, orderId) {
+        setBusy(false);
+        toastError(error);
+      }
+    );
+    payment.startPayment(
+      amount: double.parse(amount), 
+      customerId: user?.id.toString() ?? "1", 
+      customerPhone: user?.phone ?? "9999999999"
     );
   }
 

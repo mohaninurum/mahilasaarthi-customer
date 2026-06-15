@@ -81,6 +81,7 @@ class NewTaxiOrderEntryCollapsed extends StatelessWidget {
                           taxiNewOrderViewModel.previousAddresses,
                         ),
                         dataSet: taxiNewOrderViewModel.shortPreviousAddressesList,
+                        noScrollPhysics: true,
                         padding: EdgeInsets.zero,
                         itemBuilder: (ctx, index) {
                           final orderAddressHistory = taxiNewOrderViewModel
@@ -99,7 +100,7 @@ class NewTaxiOrderEntryCollapsed extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
+                ).scrollVertical(),
         )
             .p20
             .color(context.theme.colorScheme.background)

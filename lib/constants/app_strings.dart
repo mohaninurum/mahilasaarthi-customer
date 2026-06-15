@@ -62,7 +62,8 @@ class AppStrings {
   static bool get isCustomOtp =>
       !["none", "firebase"].contains(otpGateway.toLowerCase());
 
-  static String get emergencyContact => env('emergencyContact') ?? "100";
+  static String get emergencyContact =>
+      LocalStorageService.prefs?.getString('customCustomerSOS') ?? "112";
 
   //Social media logins
   static bool get googleLogin => env('auth')['googleLogin'] ?? false;

@@ -64,9 +64,9 @@ class _HomePageState extends State<HomePage> {
                 onPageChanged: model.onPageChanged,
                 children: [
                   model.homeView,
-                  // OrdersPage(),
-                  // MainSearchPage(),
-                  // ProfilePage(),
+                  OrdersPage(),
+                  MainSearchPage(),
+                  ProfilePage(),
                 ],
               ),
             ),

@@ -28,17 +28,19 @@ class ProfileCard extends StatelessWidget {
               HStack(
                 [
                   //
-                  CachedNetworkImage(
-                    imageUrl: model.currentUser?.photo ?? "",
-                    progressIndicatorBuilder: (context, imageUrl, progress) {
-                      return BusyIndicator();
-                    },
-                    errorWidget: (context, imageUrl, progress) {
-                      return Image.asset(
-                        AppImages.user,
-                      );
-                    },
-                  )
+                  (model.currentUser?.photo == null || model.currentUser!.photo.isEmpty)
+                      ? Image.asset(AppImages.user)
+                      : CachedNetworkImage(
+                          imageUrl: model.currentUser!.photo,
+                          progressIndicatorBuilder: (context, imageUrl, progress) {
+                            return BusyIndicator();
+                          },
+                          errorWidget: (context, imageUrl, progress) {
+                            return Image.asset(
+                              AppImages.user,
+                            );
+                          },
+                        )
                       .wh(Vx.dp64, Vx.dp64)
                       .box
                       .roundedFull

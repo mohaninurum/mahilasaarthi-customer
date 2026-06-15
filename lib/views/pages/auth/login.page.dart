@@ -18,6 +18,7 @@ import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../view_models/profile.vm.dart';
+import '../../../widgets/buttons/custom_button.dart';
 import 'login/scan_login.view.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool useOTP = true;
-  PageController controller =  PageController();
+  PageController controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onPressed: () => Navigator.pop(context),
             ),
-            title: Text("Login",style: TextStyle(color: Colors.white,fontSize: 24,fontWeight: FontWeight.bold),),
+            title: Text(
+              "Login",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+            ),
             elevation: 0,
             isLoading: model.isBusy,
             body: Column(
@@ -65,19 +72,25 @@ class _LoginPageState extends State<LoginPage> {
                   height: 225,
                   child: Stack(
                     children: [
-                      Container(height: 200,
+                      Container(
+                        height: 200,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(begin:Alignment.bottomLeft ,end:  Alignment.topRight,colors: [Color(0xffC70774),Color(0xff610339)]),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [Color(0xffC70774), Color(0xff610339)]),
                           color: AppColor.primaryColor,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 35,),
+                            SizedBox(
+                              height: 35,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                  IconButton(
+                                IconButton(
                                   padding: EdgeInsets.zero,
                                   icon: Icon(
                                     FlutterIcons.arrow_left_bold_mco,
@@ -90,19 +103,48 @@ class _LoginPageState extends State<LoginPage> {
                                   margin: EdgeInsets.only(right: 20),
                                   child: InkWell(
                                     onTap: () {
-                                      ProfileViewModel(context).changeLanguage();
+                                      ProfileViewModel(context)
+                                          .changeLanguage();
                                     },
                                     splashColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
-
-                                    child: Container(child: Row(children: [
-                                      Icon(Icons.language,color: Colors.white,size: 20,),
-                                      SizedBox(width: 5,),
-                                      Text(AuthServices.getLocale(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
-                                      SizedBox(width: 5,),
-                                      Icon(Icons.keyboard_arrow_down_outlined,color: Colors.white,size: 20,)
-
-                                    ],),padding: EdgeInsets.symmetric(horizontal: 8,vertical: 6 ),decoration: BoxDecoration(color: Colors.transparent,border: Border.all(color: Colors.white),borderRadius: BorderRadius.circular(8)),),
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.language,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            AuthServices.getLocale(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Icon(
+                                            Icons.keyboard_arrow_down_outlined,
+                                            color: Colors.white,
+                                            size: 20,
+                                          )
+                                        ],
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 6),
+                                      decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                    ),
                                   ),
                                 )
                               ],
@@ -111,11 +153,21 @@ class _LoginPageState extends State<LoginPage> {
                               padding: const EdgeInsets.all(15),
                               child: HStack(
                                 [
-
                                   VStack(
                                     [
-                                      "Welcome Back".tr().text.xl3.bold.white.make(),
-                                      "Login to continue".tr().text.light.white.make(),
+                                      "Welcome Back"
+                                          .tr()
+                                          .text
+                                          .xl3
+                                          .bold
+                                          .white
+                                          .make(),
+                                      "Login to continue"
+                                          .tr()
+                                          .text
+                                          .light
+                                          .white
+                                          .make(),
                                     ],
                                   ).expand(),
                                   Image.asset(
@@ -127,12 +179,15 @@ class _LoginPageState extends State<LoginPage> {
                                       .roundedFull
                                       .clip(Clip.antiAlias)
                                       .make(),
-                                  SizedBox(width: 10,),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
                                 ],
                               ),
                             ),
                           ],
-                        ),),
+                        ),
+                      ),
                       Positioned(
                         bottom: 0,
                         left: 0,
@@ -144,8 +199,16 @@ class _LoginPageState extends State<LoginPage> {
                             initialValue: 1,
                             padding: 10,
                             children: {
-                              1: Text("Phone Number".tr(),style: TextStyle(color: !useOTP ? Colors.black:Colors.white)),
-                              2: Text("Email Address".tr(),style: TextStyle(color: useOTP ? Colors.black:Colors.white)),
+                              1: Text("Phone Number".tr(),
+                                  style: TextStyle(
+                                      color: !useOTP
+                                          ? Colors.black
+                                          : Colors.white)),
+                              2: Text("Email Address".tr(),
+                                  style: TextStyle(
+                                      color: useOTP
+                                          ? Colors.black
+                                          : Colors.white)),
                             },
                             decoration: BoxDecoration(
                               color: context.theme.colorScheme.background,
@@ -159,7 +222,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             thumbDecoration: BoxDecoration(
                               // color: AppColor.primaryColor,
-                              gradient: LinearGradient(begin:Alignment.bottomLeft ,end:  Alignment.topRight,colors: [Color(0xffC70774),Color(0xff610339)]),
+                              gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    Color(0xffC70774),
+                                    Color(0xff610339)
+                                  ]),
                               borderRadius: BorderRadius.circular(20),
                               // boxShadow: [
                               //   BoxShadow(
@@ -182,33 +251,35 @@ class _LoginPageState extends State<LoginPage> {
                             onValueChanged: (value) {
                               setState(() {
                                 useOTP = value == 1;
-                                if(!useOTP){
-                                  controller.nextPage(duration: Duration(milliseconds: 400), curve: Curves.ease);
-                                }else{
-                                  controller.previousPage(duration: Duration(milliseconds: 400), curve: Curves.ease);
+                                if (!useOTP) {
+                                  controller.nextPage(
+                                      duration: Duration(milliseconds: 400),
+                                      curve: Curves.ease);
+                                } else {
+                                  controller.previousPage(
+                                      duration: Duration(milliseconds: 400),
+                                      curve: Curves.ease);
                                 }
                               });
                             },
                           ).centered(),
                         ),
                       ),
-
                     ],
                   ),
                 ),
-
                 Padding(
-                  padding: EdgeInsets.only(bottom: context.mq.viewInsets.bottom),
+                  padding:
+                      EdgeInsets.only(bottom: context.mq.viewInsets.bottom),
                   child: VStack(
                     [
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       //
                       VStack(
                         [
                           //
-
-
-
 
                           //LOGIN Section
                           //both login type
@@ -216,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
                               AppStrings.enableEmailLogin)
                             AnimatedContainer(
                               duration: Duration(milliseconds: 300),
-                              height: useOTP  ? 165:250,
+                              height: useOTP ? 165 : 250,
                               child: PageView(
                                 physics: NeverScrollableScrollPhysics(),
                                 controller: controller,
@@ -224,10 +295,9 @@ class _LoginPageState extends State<LoginPage> {
                                   OTPLoginView(model),
                                   EmailLoginView(model),
                                 ],
-
                               ),
                             ),
-                            // CombinedLoginTypeView(model),
+                          // CombinedLoginTypeView(model),
                           //only email login
                           if (AppStrings.enableEmailLogin &&
                               !AppStrings.enableOTPLogin)
