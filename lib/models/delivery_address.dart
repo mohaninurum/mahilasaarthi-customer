@@ -56,11 +56,11 @@ class DeliveryAddress {
         city: json["city"],
         state: json["state"],
         country: json["country"],
-        latitude: double.parse(json["latitude"].toString()),
-        longitude: double.parse(json["longitude"].toString()),
+        latitude: double.tryParse(json["latitude"].toString()),
+        longitude: double.tryParse(json["longitude"].toString()),
         distance: json["distance"] == null
             ? null
-            : double.parse(json["distance"].toString()),
+            : double.tryParse(json["distance"].toString()),
         isDefault: int.tryParse(json["is_default"].toString()) ?? 0,
         userId: int.tryParse(json["user_id"].toString()) ?? 0,
         createdAt: json["created_at"] != null
