@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio_http_cache_lts/dio_http_cache_lts.dart';
 import 'package:mahilasaarthi/constants/api.dart';
 // import 'package:mahilasaarthi/services/app.service.dart';
@@ -37,6 +38,12 @@ class HttpService {
       // connectTimeout: 300,
     );
     dio = new Dio(baseOptions);
+    (dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
     dio!.interceptors.add(getCacheManager().interceptor);
     
     dio!.interceptors.add(InterceptorsWrapper(

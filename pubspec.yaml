@@ -136,6 +136,7 @@ dependency_overrides:
   http: ^0.13.0
   win32: ^5.0.0
   fwfh_text_style: 2.22.8+2
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_application_id: ^2.0.0-dev

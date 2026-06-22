@@ -31,7 +31,7 @@ class MenuItem extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed != null ? () => onPressed!() : null,
       elevation: 0.0,
-      color: Color(0xffFAFAFA),
+      color: Theme.of(context).cardColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: HStack(

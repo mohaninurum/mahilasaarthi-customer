@@ -147,7 +147,8 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
     try {
       final response = await authRequest.sendOTP(accountPhoneNumber!);
       setBusyForObject(otpLogin, false);
-      showVerificationEntry(response.body?['otp_code']?.toString());
+      print("OTP Code received from API (for dev purposes): ${response.body?['otp_code']}");
+      showVerificationEntry(); // Removed the auto-fill OTP to force the manual entry screen
     } catch (error) {
       setBusyForObject(otpLogin, false);
       viewContext.showToast(msg: "$error", bgColor: Colors.red);
@@ -343,7 +344,9 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
         context: viewContext,
         type: CoolAlertType.error,
         title: "Login Failed".tr(),
-        text: "An unexpected error occurred during login. Please try again later.".tr(),
+        text:
+            "An unexpected error occurred during login. Please try again later."
+                .tr(),
       );
     }
   }

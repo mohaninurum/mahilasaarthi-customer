@@ -33,18 +33,27 @@ subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             project.android {
+                compileSdkVersion 34
                 if (namespace == null) {
                     def manifestPath = project.file("src/main/AndroidManifest.xml")
-                    if (!manifestPath.exists() || !manifestPath.text.contains('package=')) {
-                        if (project.name == 'fluttertoast') {
-                            namespace 'io.github.ponnamkarthik.toast.fluttertoast'
+                    if (manifestPath.exists()) {
+                        def manifestText = manifestPath.text
+                        def matcher = manifestText =~ /package="([^"]+)"/
+                        if (matcher.find()) {
+                            namespace matcher.group(1)
                         } else {
                             namespace project.group
                         }
+                    } else {
+                        namespace project.group
                     }
                 }
                 buildFeatures {
                     buildConfig true
+                }
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_11
+                    targetCompatibility JavaVersion.VERSION_11
                 }
             }
         }
@@ -64,16 +73,18 @@ subprojects {
         }
     }
     
-    tasks.withType(JavaCompile) {
-        options.compilerArgs.remove('-Werror')
-        options.compilerArgs.remove('-Xlint:all')
-        options.compilerArgs.remove('-Xlint:deprecation')
-        options.compilerArgs << '-Xlint:-options'
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile).configureEach {
+            options.compilerArgs.removeAll(['-Werror', '-Xlint:all', '-Xlint:deprecation'])
+            options.compilerArgs << '-Xlint:-options'
+            sourceCompatibility = "11"
+            targetCompatibility = "11"
+        }
     }
     
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
         }
     }
 }

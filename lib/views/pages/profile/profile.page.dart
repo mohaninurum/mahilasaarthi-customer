@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage>
       disposeViewModel: false,
       builder: (context, model, child) {
         return BasePage(
-          backgroundColor: Color(0xd0F8F7F7),
+          backgroundColor: Theme.of(context).colorScheme.background,
           body: VStack(
             [
               //
@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage>
 
 
               //profile card
-              ProfileCard(model).box.bottomRounded(value: 10) .color(Colors.white).make(),
+              ProfileCard(model).box.bottomRounded(value: 10) .color(Theme.of(context).cardColor).make(),
   SizedBox(height: 20,),
               //menu
               VStack(

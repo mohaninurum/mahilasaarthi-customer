@@ -70,7 +70,7 @@ class NewTaxiOrderSummaryCollapsed extends StatelessWidget {
                   GestureDetector(
                     child: TaxiDiscountSection(vm, fullView: false),
                     onTap: newTaxiOrderSummaryViewModel.openPanel,
-                  ).box.roundedSM.gray200.px8.make().expand(flex: 4),
+                  ).box.roundedSM.color(context.theme.brightness == Brightness.dark ? Colors.grey[800]! : Colors.grey[200]!).px8.make().expand(flex: 4),
                 ],
               ),
               UiSpacer.vSpace(10),

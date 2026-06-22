@@ -88,7 +88,7 @@ class NewTaxiOrderEntryCollapsed extends StatelessWidget {
                               .shortPreviousAddressesList[index];
                           return Container(
                             padding: EdgeInsets.symmetric(horizontal: 14,vertical: 0),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Color(0xffFAFAFA)),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: context.theme.colorScheme.background),
                             child: TaxiOrderHistoryListItem(
                               orderAddressHistory,
                               onPressed:

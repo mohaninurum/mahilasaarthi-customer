@@ -60,12 +60,12 @@ class ProfileCard extends StatelessWidget {
                               .tr()
                               .text
                               .sm
-                              .color(Colors.black)
+                              .color(Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
                               .make()
                               .box
                               .px8
                               .withRounded(value: 3)
-                              .border(color: Colors.black)
+                              .border(color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black)
                               .make()
                               .onInkTap(model.shareReferralCode)
                               .py8()

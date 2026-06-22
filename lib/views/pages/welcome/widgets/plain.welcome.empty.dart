@@ -121,7 +121,7 @@ class _PlainEmptyWelcomeState extends State<PlainEmptyWelcome> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 25, vertical: 20),
                           child: Align(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.center,
                             child: Text(
                               "Ride",
                               style:
@@ -153,7 +153,7 @@ class _PlainEmptyWelcomeState extends State<PlainEmptyWelcome> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 25, vertical: 20),
                           child: Align(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.center,
                             child: Text(
                               "Ecommerce",
                               style:
@@ -186,7 +186,7 @@ class _PlainEmptyWelcomeState extends State<PlainEmptyWelcome> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 25, vertical: 20),
                           child: Align(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.center,
                             child: Text(
                               "Pharmacy",
                               style:
@@ -218,7 +218,7 @@ class _PlainEmptyWelcomeState extends State<PlainEmptyWelcome> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 25, vertical: 20),
                           child: Align(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.center,
                             child: Text(
                               "Parcel Delivery",
                               style:

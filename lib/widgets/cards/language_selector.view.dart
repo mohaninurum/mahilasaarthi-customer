@@ -16,11 +16,11 @@ class AppLanguageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       child: Container(
         height: 500,
         padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: BorderRadius.circular(15)),
         child: VStack(
           [
             //

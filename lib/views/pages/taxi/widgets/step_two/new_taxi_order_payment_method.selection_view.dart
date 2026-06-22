@@ -31,7 +31,7 @@ class NewTaxiOrderPaymentMethodSelectionView extends StatelessWidget {
         )
         .box
         .roundedSM
-        .gray200
+        .color(context.theme.brightness == Brightness.dark ? Colors.grey[800]! : Colors.grey[200]!)
         .px8
         .make();
   }

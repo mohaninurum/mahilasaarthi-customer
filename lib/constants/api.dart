@@ -2,7 +2,8 @@
 
 class Api {
   static String get baseUrl {
-    return "https://mahila-sarthi.mytechbro.com/api";
+    return "https://admin.mahilasaarthi.in/api";
+    //return "https://mahila-sarthi.mytechbro.com/api";
     // return "https://mahila.easysoft.pk/api";
   }
 
@@ -26,7 +27,7 @@ class Api {
   static const verifyOtp = "/otp/verify";
   static const verifyFirebaseOtp = "/otp/firebase/verify";
   static const socialLogin = "/social/login";
-  
+
   // Cashfree Verification APIs
   static const generateAadhaarOtp = "/verify/aadhaar/generate-otp";
   static const verifyAadhaarOtp = "/verify/aadhaar/submit-otp";
